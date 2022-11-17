@@ -156,6 +156,7 @@ if DEBUG:
     )
 
 MIDDLEWARE = [
+    "compression_middleware.middleware.CompressionMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
