@@ -110,7 +110,7 @@ class Consumer(LoggingMixin):
 
     def pre_check_duplicate(self):
         with open(self.path, "rb") as f:
-            checksum = hashlib.md5(f.read()).hexdigest()
+            checksum = hashlib.sha3_256(f.read()).hexdigest()
         existing_doc = Document.objects.filter(
             Q(checksum=checksum) | Q(archive_checksum=checksum),
         )
@@ -399,7 +399,7 @@ class Consumer(LoggingMixin):
                         )
 
                         with open(archive_path, "rb") as f:
-                            document.archive_checksum = hashlib.md5(
+                            document.archive_checksum = hashlib.sha3_256(
                                 f.read(),
                             ).hexdigest()
 
@@ -478,7 +478,7 @@ class Consumer(LoggingMixin):
                 title=(self.override_title or file_info.title)[:127],
                 content=text,
                 mime_type=mime_type,
-                checksum=hashlib.md5(f.read()).hexdigest(),
+                checksum=hashlib.sha3_256(f.read()).hexdigest(),
                 created=create_date,
                 modified=create_date,
                 storage_type=storage_type,

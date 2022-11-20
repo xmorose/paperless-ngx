@@ -158,7 +158,7 @@ class Document(models.Model):
 
     checksum = models.CharField(
         _("checksum"),
-        max_length=32,
+        max_length=64,
         editable=False,
         unique=True,
         help_text=_("The checksum of the original document."),
@@ -166,7 +166,7 @@ class Document(models.Model):
 
     archive_checksum = models.CharField(
         _("archive checksum"),
-        max_length=32,
+        max_length=64,
         editable=False,
         blank=True,
         null=True,

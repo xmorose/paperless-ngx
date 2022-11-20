@@ -119,7 +119,7 @@
                                     <td>{{metadata?.original_filename}}</td>
                                 </tr>
                                 <tr>
-                                    <td i18n>Original MD5 checksum</td>
+                                    <td i18n>Original SHA3-256 checksum</td>
                                     <td>{{metadata?.original_checksum}}</td>
                                 </tr>
                                 <tr>
@@ -131,7 +131,7 @@
                                     <td>{{metadata?.original_mime_type}}</td>
                                 </tr>
                                 <tr *ngIf="metadata?.has_archive_version">
-                                    <td i18n>Archive MD5 checksum</td>
+                                    <td i18n>Archive SHA3-256 checksum</td>
                                     <td>{{metadata?.archive_checksum}}</td>
                                 </tr>
                                 <tr *ngIf="metadata?.has_archive_version">

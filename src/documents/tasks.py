@@ -247,7 +247,7 @@ def update_document_archive_file(document_id):
         if parser.get_archive_path():
             with transaction.atomic():
                 with open(parser.get_archive_path(), "rb") as f:
-                    checksum = hashlib.md5(f.read()).hexdigest()
+                    checksum = hashlib.sha3_256(f.read()).hexdigest()
                 # I'm going to save first so that in case the file move
                 # fails, the database is rolled back.
                 # We also don't use save() since that triggers the filehandling

@@ -1076,12 +1076,12 @@ def run():
     with open(doc.source_path, "w") as f:
         f.write(str(uuid.uuid4()))
     with open(doc.source_path, "rb") as f:
-        doc.checksum = hashlib.md5(f.read()).hexdigest()
+        doc.checksum = hashlib.sha3_256(f.read()).hexdigest()
 
     with open(doc.archive_path, "w") as f:
         f.write(str(uuid.uuid4()))
     with open(doc.archive_path, "rb") as f:
-        doc.archive_checksum = hashlib.md5(f.read()).hexdigest()
+        doc.archive_checksum = hashlib.sha3_256(f.read()).hexdigest()
 
     doc.save()
 

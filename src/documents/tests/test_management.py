@@ -127,7 +127,7 @@ class TestDecryptDocuments(TestCase):
         ).enable()
 
         doc = Document.objects.create(
-            checksum="82186aaa94f0b98697d704b90fd1c072",
+            checksum="7815805e5a5c8be7354c05e72f1b1cd037bc778c01abe7e05c2f6d2842088bff",
             title="wow",
             filename="0000004.pdf.gpg",
             mime_type="application/pdf",
@@ -167,7 +167,7 @@ class TestDecryptDocuments(TestCase):
         self.assertTrue(os.path.isfile(doc.thumbnail_path))
 
         with doc.source_file as f:
-            checksum = hashlib.md5(f.read()).hexdigest()
+            checksum = hashlib.sha3_256(f.read()).hexdigest()
             self.assertEqual(checksum, doc.checksum)
 
 

@@ -83,13 +83,13 @@ Access the metadata of a document with an ID ``id`` at ``/api/documents/<id>/met
 
 The endpoint reports the following data:
 
-*   ``original_checksum``: MD5 checksum of the original document.
+*   ``original_checksum``: SHA3-256 checksum of the original document.
 *   ``original_size``: Size of the original document, in bytes.
 *   ``original_mime_type``: Mime type of the original document.
 *   ``media_filename``: Current filename of the document, under which it is stored inside the media directory.
 *   ``has_archive_version``: True, if this document is archived, false otherwise.
 *   ``original_metadata``: A list of metadata associated with the original document. See below.
-*   ``archive_checksum``: MD5 checksum of the archived document, or null.
+*   ``archive_checksum``: SHA3-256 checksum of the archived document, or null.
 *   ``archive_size``: Size of the archived document in bytes, or null.
 *   ``archive_metadata``: Metadata associated with the archived document, or null. See below.
 

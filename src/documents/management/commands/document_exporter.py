@@ -285,7 +285,7 @@ class Command(BaseCommand):
             target_stat = os.stat(target)
             if self.compare_checksums and source_checksum:
                 with open(target, "rb") as f:
-                    target_checksum = hashlib.md5(f.read()).hexdigest()
+                    target_checksum = hashlib.sha3_256(f.read()).hexdigest()
                 perform_copy = target_checksum != source_checksum
             elif source_stat.st_mtime != target_stat.st_mtime:
                 perform_copy = True

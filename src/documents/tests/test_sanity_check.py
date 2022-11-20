@@ -49,8 +49,8 @@ class TestSanityCheck(DirectoriesMixin, TestCase):
 
         return Document.objects.create(
             title="test",
-            checksum="42995833e01aea9b3edee44bbfdd7ce1",
-            archive_checksum="62acb0bcbfbcaa62ca6ad3668e4e404b",
+            checksum="8ddd5e02baff9bc317f44855f99a79d64b9e5a6db017483c3d153cf86fad072e",
+            archive_checksum="103f1eb00fc1793b8de1a630ea1d21b1dd023bff3baa71c77c8adbc4d7dfd59c",
             content="test",
             pk=1,
             filename="0000001.pdf",

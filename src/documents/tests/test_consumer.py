@@ -351,8 +351,14 @@ class TestConsumer(DirectoriesMixin, TestCase):
 
         self.assertTrue(os.path.isfile(document.archive_path))
 
-        self.assertEqual(document.checksum, "42995833e01aea9b3edee44bbfdd7ce1")
-        self.assertEqual(document.archive_checksum, "62acb0bcbfbcaa62ca6ad3668e4e404b")
+        self.assertEqual(
+            document.checksum,
+            "8ddd5e02baff9bc317f44855f99a79d64b9e5a6db017483c3d153cf86fad072e",
+        )
+        self.assertEqual(
+            document.archive_checksum,
+            "103f1eb00fc1793b8de1a630ea1d21b1dd023bff3baa71c77c8adbc4d7dfd59c",
+        )
 
         self.assertFalse(os.path.isfile(filename))
 

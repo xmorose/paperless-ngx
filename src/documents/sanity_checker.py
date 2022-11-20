@@ -90,7 +90,7 @@ def check_sanity(progress=False) -> SanityCheckMessages:
             if source_path in present_files:
                 present_files.remove(source_path)
             try:
-                checksum = hashlib.md5(source_path.read_bytes()).hexdigest()
+                checksum = hashlib.sha3_256(source_path.read_bytes()).hexdigest()
             except OSError as e:
                 messages.error(doc.pk, f"Cannot read original file of document: {e}")
             else:
@@ -120,7 +120,7 @@ def check_sanity(progress=False) -> SanityCheckMessages:
                 if archive_path in present_files:
                     present_files.remove(archive_path)
                 try:
-                    checksum = hashlib.md5(archive_path.read_bytes()).hexdigest()
+                    checksum = hashlib.sha3_256(archive_path.read_bytes()).hexdigest()
                 except OSError as e:
                     messages.error(
                         doc.pk,

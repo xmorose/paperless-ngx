@@ -32,8 +32,8 @@ class TestExportImport(DirectoriesMixin, TestCase):
 
         self.d1 = Document.objects.create(
             content="Content",
-            checksum="42995833e01aea9b3edee44bbfdd7ce1",
-            archive_checksum="62acb0bcbfbcaa62ca6ad3668e4e404b",
+            checksum="8ddd5e02baff9bc317f44855f99a79d64b9e5a6db017483c3d153cf86fad072e",
+            archive_checksum="103f1eb00fc1793b8de1a630ea1d21b1dd023bff3baa71c77c8adbc4d7dfd59c",
             title="wow1",
             filename="0000001.pdf",
             mime_type="application/pdf",
@@ -41,21 +41,21 @@ class TestExportImport(DirectoriesMixin, TestCase):
         )
         self.d2 = Document.objects.create(
             content="Content",
-            checksum="9c9691e51741c1f4f41a20896af31770",
+            checksum="826b7f714188a0d0640fcd86457f59b8dec38408de004393f69a48c830aca142",
             title="wow2",
             filename="0000002.pdf",
             mime_type="application/pdf",
         )
         self.d3 = Document.objects.create(
             content="Content",
-            checksum="d38d7ed02e988e072caf924e0f3fcb76",
+            checksum="fd6a2b660c740fbd783d8aed0c261e4c32476f8fda17a38a7610be06690c70a1",
             title="wow2",
             filename="0000003.pdf",
             mime_type="application/pdf",
         )
         self.d4 = Document.objects.create(
             content="Content",
-            checksum="82186aaa94f0b98697d704b90fd1c072",
+            checksum="7815805e5a5c8be7354c05e72f1b1cd037bc778c01abe7e05c2f6d2842088bff",
             title="wow_dec",
             filename="0000004.pdf.gpg",
             mime_type="application/pdf",
@@ -166,7 +166,7 @@ class TestExportImport(DirectoriesMixin, TestCase):
                 )
 
                 with open(fname, "rb") as f:
-                    checksum = hashlib.md5(f.read()).hexdigest()
+                    checksum = hashlib.sha3_256(f.read()).hexdigest()
                 self.assertEqual(checksum, element["fields"]["checksum"])
 
                 self.assertEqual(
@@ -182,7 +182,7 @@ class TestExportImport(DirectoriesMixin, TestCase):
                     self.assertTrue(os.path.exists(fname))
 
                     with open(fname, "rb") as f:
-                        checksum = hashlib.md5(f.read()).hexdigest()
+                        checksum = hashlib.sha3_256(f.read()).hexdigest()
                     self.assertEqual(checksum, element["fields"]["archive_checksum"])
 
             elif element["model"] == "documents.comment":
