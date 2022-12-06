@@ -39,9 +39,12 @@ markdown_extensions:
   - tables
   - pymdownx.highlight:
       anchor_linenums: true
-  - pymdownx.superfences
   - pymdownx.inlinehilite
-strict: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
 nav:
     - index.md
     - setup.md
@@ -51,6 +54,7 @@ nav:
     - advanced_usage.md
     - 'REST API': api.md
     - development.md
+    - architecture.md
     - 'FAQs': faq.md
     - troubleshooting.md
     - changelog.md

@@ -11,7 +11,7 @@ repos:
       - id: check-json
         exclude: "tsconfig.*json"
       - id: check-yaml
-        exclude: "charts/paperless-ngx/templates/common.yaml"
+        exclude: "(charts/paperless-ngx/templates/common.yaml)|(mkdocs.yml)"
       - id: check-toml
       - id: check-executables-have-shebangs
       - id: end-of-file-fixer
