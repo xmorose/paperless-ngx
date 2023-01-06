@@ -132,10 +132,6 @@ jobs:
         run: |
           pip install --user pipenv==2022.11.30
       -
-        name: Gather info
-        run: |
-          pipenv --python ${{ steps.setup-python.outputs.python-version }} run python --version
-      -
         name: Install system dependencies
         run: |
           sudo apt-get update -qq
