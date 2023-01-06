@@ -122,16 +122,16 @@ jobs:
           docker compose --file ${GITHUB_WORKSPACE}/docker/compose/docker-compose.ci-test.yml pull --quiet
           docker compose --file ${GITHUB_WORKSPACE}/docker/compose/docker-compose.ci-test.yml up --detach
       -
-        name: Install pipenv
-        run: |
-          pipx install pipenv==2022.11.30
-      -
         name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "${{ matrix.python-version }}"
           cache: "pipenv"
           cache-dependency-path: 'Pipfile.lock'
+      -
+        name: Install pipenv
+        run: |
+          pip install --user pipenv==2022.11.30
       -
         name: Install system dependencies
         run: |
@@ -140,6 +140,7 @@ jobs:
       -
         name: Install Python dependencies
         run: |
+          pipenv --clear
           pipenv sync --dev
       -
         name: List installed Python dependencies
