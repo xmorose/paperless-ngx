@@ -29,7 +29,7 @@ jobs:
         name: Install python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
       -
         name: Check files
         uses: pre-commit/action@v3.0.0
@@ -48,13 +48,13 @@ jobs:
         id: setup-python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
           cache: "pipenv"
           cache-dependency-path: 'Pipfile.lock'
       -
         name: Install pipenv
         run: |
-          pip install --user pipenv==2022.11.30
+          pip install --user pipenv==${DEFAULT_PIP_ENV_VERSION}
       -
         name: Install dependencies
         run: |
@@ -135,7 +135,7 @@ jobs:
       -
         name: Install pipenv
         run: |
-          pip install --user pipenv==2022.11.30
+          pip install --user pipenv==${DEFAULT_PIP_ENV_VERSION}
       -
         name: Install system dependencies
         run: |
@@ -170,7 +170,7 @@ jobs:
           done
       -
         name: Publish coverage results
-        if: matrix.python-version == '3.9' && steps.changed-files-specific.outputs.any_changed == 'true'
+        if: matrix.python-version == ${{ env.DEFAULT_PYTHON_VERSION }} && steps.changed-files-specific.outputs.any_changed == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # https://github.com/coveralls-clients/coveralls-python/issues/251
@@ -232,7 +232,7 @@ jobs:
         name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
       -
         name: Setup qpdf image
         id: qpdf-setup
@@ -399,13 +399,13 @@ jobs:
         id: setup-python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
           cache: "pipenv"
           cache-dependency-path: 'Pipfile.lock'
       -
         name: Install pipenv + tools
         run: |
-          pip install --upgrade --user pipenv==2022.11.30 setuptools wheel
+          pip install --upgrade --user pipenv==${DEFAULT_PIP_ENV_VERSION} setuptools wheel
       -
         name: Install Python dependencies
         run: |
@@ -528,17 +528,16 @@ jobs:
         with:
           ref: main
       -
-        name: Install pipenv
-        run: |
-          pip3 install --upgrade pip setuptools wheel pipx
-          pipx install pipenv
-      -
         name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
           cache: "pipenv"
           cache-dependency-path: 'Pipfile.lock'
+      -
+        name: Install pipenv + tools
+        run: |
+          pip install --upgrade --user pipenv==${DEFAULT_PIP_ENV_VERSION} setuptools wheel
       -
         name: Append Changelog to docs
         id: append-Changelog
