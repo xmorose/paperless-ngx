@@ -133,8 +133,12 @@ jobs:
         name: Install pipenv
         run: |
           pip install --user pipenv==2022.11.30
-          pipenv --py
-          pipenv --python ${{ steps.setup-python.outputs.python-version }} --py
+          pipenv run which python
+          pipenv run python --version
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} which python
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} python --version
+          pipenv --python ${{ steps.setup-python.outputs.python-path }} which python
+          pipenv --python ${{ steps.setup-python.outputs.python-path }} python --version
       -
         name: Install system dependencies
         run: |
