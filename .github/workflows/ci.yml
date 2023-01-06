@@ -13,6 +13,10 @@ on:
     branches-ignore:
       - 'translations**'
 
+env:
+  DEFAULT_PIP_ENV_VERSION: "2022.11.30"
+  DEFAULT_PYTHON_VERSION: "3.9"
+
 jobs:
   pre-commit:
     name: Linting Checks
@@ -21,13 +25,11 @@ jobs:
       -
         name: Checkout repository
         uses: actions/checkout@v3
-
       -
-        name: Install tools
+        name: Install python
         uses: actions/setup-python@v4
         with:
           python-version: "3.9"
-
       -
         name: Check files
         uses: pre-commit/action@v3.0.0
@@ -142,7 +144,7 @@ jobs:
       -
         name: Install Python dependencies
         run: |
-          pipenv --python ${{ steps.setup-python.outputs.python-version }} python --version
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} run python --version
           pipenv --python ${{ steps.setup-python.outputs.python-version }} sync --dev
       -
         name: List installed Python dependencies
