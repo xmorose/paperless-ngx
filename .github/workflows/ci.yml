@@ -140,17 +140,16 @@ jobs:
       -
         name: Install Python dependencies
         run: |
-          pipenv --clear
-          pipenv sync --dev
+          pipenv --python ${{ matrix.python-version }} sync --dev
       -
         name: List installed Python dependencies
         run: |
-          pipenv run pip list
+          pipenv --python ${{ matrix.python-version }} run pip list
       -
         name: Tests
         run: |
           cd src/
-          pipenv run pytest -ra
+          pipenv --python ${{ matrix.python-version }} run pytest -ra
       -
         name: Get changed files
         id: changed-files-specific
@@ -172,7 +171,7 @@ jobs:
         # https://github.com/coveralls-clients/coveralls-python/issues/251
         run: |
           cd src/
-          pipenv run coveralls --service=github
+          pipenv --python ${{ matrix.python-version }} run coveralls --service=github
       -
         name: Stop containers
         if: always()
