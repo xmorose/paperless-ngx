@@ -134,10 +134,7 @@ jobs:
       -
         name: Gather info
         run: |
-          pipenv run which python
-          pipenv run python --version
-          pipenv --python ${{ steps.setup-python.outputs.python-version }} python --version
-          pipenv --python ${{ steps.setup-python.outputs.python-path }} python --version
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} run python --version
       -
         name: Install system dependencies
         run: |
