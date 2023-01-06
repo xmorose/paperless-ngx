@@ -97,7 +97,7 @@ jobs:
       - pre-commit
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10']
+        python-version: ['3.8', '3.10']
       fail-fast: false
     env:
       # Enable Tika end to end testing
@@ -124,6 +124,7 @@ jobs:
       -
         name: Set up Python
         uses: actions/setup-python@v4
+        id: setup-python
         with:
           python-version: "${{ matrix.python-version }}"
           cache: "pipenv"
@@ -140,16 +141,16 @@ jobs:
       -
         name: Install Python dependencies
         run: |
-          pipenv --python ${{ matrix.python-version }} sync --dev
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} --verbose sync --dev
       -
         name: List installed Python dependencies
         run: |
-          pipenv --python ${{ matrix.python-version }} run pip list
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} run pip list
       -
         name: Tests
         run: |
           cd src/
-          pipenv --python ${{ matrix.python-version }} run pytest -ra
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} --verbose run pytest -ra
       -
         name: Get changed files
         id: changed-files-specific
@@ -171,7 +172,7 @@ jobs:
         # https://github.com/coveralls-clients/coveralls-python/issues/251
         run: |
           cd src/
-          pipenv --python ${{ matrix.python-version }} run coveralls --service=github
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} run coveralls --service=github
       -
         name: Stop containers
         if: always()
