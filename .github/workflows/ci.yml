@@ -42,28 +42,29 @@ jobs:
         name: Checkout
         uses: actions/checkout@v3
       -
-        name: Install pipenv
-        run: |
-          pipx install pipenv==2022.11.30
-      -
         name: Set up Python
+        id: setup-python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
           cache: "pipenv"
           cache-dependency-path: 'Pipfile.lock'
       -
+        name: Install pipenv
+        run: |
+          pip install --user pipenv==2022.11.30
+      -
         name: Install dependencies
         run: |
-          pipenv sync --dev
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} sync --dev
       -
         name: List installed Python dependencies
         run: |
-          pipenv run pip list
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} run pip list
       -
         name: Make documentation
         run: |
-          pipenv run mkdocs build --config-file ./mkdocs.yml
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} run mkdocs build --config-file ./mkdocs.yml
       -
         name: Upload artifact
         uses: actions/upload-artifact@v3
@@ -97,7 +98,7 @@ jobs:
       - pre-commit
     strategy:
       matrix:
-        python-version: ['3.8', '3.10']
+        python-version: ['3.8', '3.9', '3.10']
       fail-fast: false
     env:
       # Enable Tika end to end testing
@@ -123,8 +124,8 @@ jobs:
           docker compose --file ${GITHUB_WORKSPACE}/docker/compose/docker-compose.ci-test.yml up --detach
       -
         name: Set up Python
-        uses: actions/setup-python@v4
         id: setup-python
+        uses: actions/setup-python@v4
         with:
           python-version: "${{ matrix.python-version }}"
           cache: "pipenv"
@@ -141,7 +142,8 @@ jobs:
       -
         name: Install Python dependencies
         run: |
-          pipenv --python ${{ steps.setup-python.outputs.python-version }} --verbose sync --dev
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} python --version
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} sync --dev
       -
         name: List installed Python dependencies
         run: |
@@ -150,7 +152,7 @@ jobs:
         name: Tests
         run: |
           cd src/
-          pipenv --python ${{ steps.setup-python.outputs.python-version }} --verbose run pytest -ra
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} run pytest -ra
       -
         name: Get changed files
         id: changed-files-specific
@@ -391,21 +393,21 @@ jobs:
         name: Checkout
         uses: actions/checkout@v3
       -
-        name: Install pipenv
-        run: |
-          pip3 install --upgrade pip setuptools wheel pipx
-          pipx install pipenv
-      -
         name: Set up Python
+        id: setup-python
         uses: actions/setup-python@v4
         with:
           python-version: 3.9
           cache: "pipenv"
           cache-dependency-path: 'Pipfile.lock'
       -
+        name: Install pipenv + tools
+        run: |
+          pip install --upgrade --user pipenv==2022.11.30 setuptools wheel
+      -
         name: Install Python dependencies
         run: |
-          pipenv sync --dev
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} sync --dev
       -
         name: Install system dependencies
         run: |
@@ -426,17 +428,17 @@ jobs:
       -
         name: Generate requirements file
         run: |
-          pipenv requirements > requirements.txt
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} requirements > requirements.txt
       -
         name: Compile messages
         run: |
           cd src/
-          pipenv run python3 manage.py compilemessages
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} run python3 manage.py compilemessages
       -
         name: Collect static files
         run: |
           cd src/
-          pipenv run python3 manage.py collectstatic --no-input
+          pipenv --python ${{ steps.setup-python.outputs.python-version }} run python3 manage.py collectstatic --no-input
       -
         name: Move files
         run: |
