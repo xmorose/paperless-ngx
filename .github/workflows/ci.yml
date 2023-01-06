@@ -127,6 +127,8 @@ jobs:
         id: setup-python
         with:
           python-version: "${{ matrix.python-version }}"
+          cache: "pipenv"
+          cache-dependency-path: 'Pipfile.lock'
       -
         name: Install pipenv
         run: |
